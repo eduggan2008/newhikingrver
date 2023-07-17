@@ -1,0 +1,109 @@
+/* -----Color is # ----- */
+    /**
+        Website background color    rgb(210, 248, 246) 
+        Form background color rgb(247, 247, 237) 
+        Title text color    #e67e22 
+        Card info color    beige 
+    */
+
+/* ----- Basic Setup ----- */
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background-color: rgb(210, 248, 246);
+}
+
+.photographs-and-memories-title, .login-title, .register-title, .category-title, .search-title, .member-public-title {
+    color: #e67e22;
+    text-align: center;
+}
+
+/* .hiking-skeleton {
+    float: left;
+}
+
+.hiking-skeleton-image {
+    height: 200px;
+}
+
+.camper-hanging-off-cliff {
+    float: right;
+}
+
+.camper-hanging-off-cliff-image {
+    height: 200px;;
+}
+
+.card-section {
+    clear: both;
+} */
+
+
+.article-title {
+    color: #e67e22;
+    margin-bottom: 1%;
+}
+
+.article-subtitle {
+    color: #e67e22;
+    margin-bottom: 1%;
+}
+
+.article-img {
+    border: solid 3px black;
+    float: left;
+    margin: 0 2% 1% 0;
+}
+
+.article-body {
+    text-align: left;
+}
+
+.article-info {
+    clear: left;
+    background-color: beige;
+    text-align: center;
+}
+
+.form {
+    background-color: rgb(247, 247, 237);
+    padding: 3%;
+    border: solid 2px black;
+    margin-bottom: 3%;
+}
+
+
+.card-title {
+    color: #e67e22;
+    text-align: left;
+}
+
+.card-subtitle {
+    color: #e67e22;
+    text-align: left;
+}
+
+p .card-info {
+    /* background-color: beige; */
+    text-align: left;
+    padding: 1.5%;
+}
+
+
+/* .hiker-image {
+    float: left;
+} */
+
+/* .camper-image {
+    float: right;
+} */
+
+
+
+footer {
+    margin-top: 2% 0;
+}
+
