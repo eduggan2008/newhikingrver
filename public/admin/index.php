@@ -46,6 +46,20 @@ $description = "Admin Home Page";
 
         <div class="row">
 
+            <div class="card admin_dashboard col-lg-4 col-md-6 p-2">
+                <div class="card-header text-bg-danger">    
+                    <div class="row row-col-2 p-2">          
+                        <div class="col">
+                            <div class="" style="font-size:2.0em;"><?= $article_count ?> Articles</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <td><a href="article.php" class="btn btn-primary">Add Article</a></td>
+                    <td><a href="articles.php" class="btn btn-primary">View Articles</a></td>
+                </div>
+            </div>
+
             <div class="card admin_dashboard col-lg-4 col-md-6 p-2">  
                 <div class="card-header text-bg-warning">    
                     <div class="row row-col-2 p-2"> 
@@ -57,20 +71,6 @@ $description = "Admin Home Page";
                 <div class="card-footer text-center">   
                     <td><a href="category.php" class="btn btn-primary">Add Category</a></td>
                     <td><a href="categories.php" class="btn btn-primary">View Categories</a></td>
-                </div>
-            </div>
-
-            <div class="card admin_dashboard col-lg-4 col-md-6 p-2">
-                <div class="card-header text-bg-danger">    
-                    <div class="row row-col-2 p-2">          
-                        <div class="col">
-                            <div class="" style="font-size:2.0em;"><?= $article_count ?> Articles</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer text-center">
-                <td><a href="article.php" class="btn btn-primary">Add Article</a></td>
-            <td><a href="articles.php" class="btn btn-primary">View Articles</a></td>
                 </div>
             </div>
 

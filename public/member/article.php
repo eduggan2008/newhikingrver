@@ -13,6 +13,7 @@ $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $temp = $_FILES['image']['tmp_name'] ?? '';
 $destination = '';
 $saved = null;
+/* $image_filenames = ''; */
 
 $article = [
     'id' => $id,
@@ -26,6 +27,7 @@ $article = [
     'published' => false,
     'image_file' => '',
     'image_alt' => '',
+    /* 'image_filename' => '', */
 ];
 
 $errors = [
@@ -38,6 +40,7 @@ $errors = [
     'author' => '',
     'image_file' => '',
     'image_alt' => '',
+    /* 'image_filename' => '', */
 ];
 
 $success = $_GET['success'] ?? null;
@@ -99,8 +102,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $saved = $cms->getArticle()->create($arguments, $temp, $destination); 
         }
 
-        if ($saved == true) {                                          
-            redirect('article.php', ['success' => 'Success: The article was saved successfully!']); 
+        if ($saved == true) {   
+            redirect('article.php', ['success' => 'Success: The article was saved successfully!']);                    
+            /* redirect('article.php', ['success' => 'Success: The article was saved successfully!']); */  
+        
         } else {                                                       
             $errors['warning'] = 'Warning: The article title already in use';       
         }
@@ -129,8 +134,12 @@ $description = "Member Article";
         <main class="container admin" id="content">
 
         <div class="category-success-failure-messages col-lg-8">
-            <?php if($success) {?> <div class="alert alert-success"><?= $success ?></div> <?php } ?>
-            <?php if($failure) {?> <div class="alert alert-danger"><?= $failure ?></div> <?php } ?>
+            <?php if($success) {?> 
+                <div class="alert alert-success"><?= $success ?></div>
+            <?php } ?>
+            <?php if($failure) { ?> 
+                <div class="alert alert-danger"><?= $failure ?></div> 
+            <?php } ?>
         </div>
         <br>
 
@@ -140,26 +149,29 @@ $description = "Member Article";
         <?php } ?>
 
         <div class="member_article">
+
             <section class="image">
                 <?php if (!$article['image_file']) { ?>
-                    <label for="image">Upload image:</label>
-                    <div class="form-group image-placeholder">
-                    <input type="file" name="image" class="form-control-file" id="image" multiple><br>
-                    <span class="errors"><?= $errors['image_file'] ?></span>
+                    <div class="form-group">
+                        <label for="image">Upload image: </label>
+                        <input type="file" name="image" class="form-control-file" id="image" multiple>
+                        <!-- <input type="file" name="image[]" class="form-control-file" id="image" multiple> -->
+                        <br>
+                        <span class="errors"><?= $errors['image_file'] ?></span>
                     </div>
                     <div class="form-group">
-                    <label for="image_alt">Alt text: </label>
-                    <input type="text" name="image_alt" id="image_alt" value="" class="form-control">
-                    <span class="errors"><?= $errors['image_alt'] ?></span>
+                        <label for="image_alt">Alt text: </label>
+                        <input type="text" name="image_alt" id="image_alt" value="" class="form-control">
+                        <span class="errors"><?= $errors['image_alt'] ?></span>
                     </div>
                     <br><br><br>
                 <?php } else { ?>
-                    <label>Image:</label>
-                    <img src="../uploads/<?= $article['image_file'] ?>" width="400px"
-                        alt="<?= $article['image_alt'] ?>">
-                    <p class="alt"><strong>Alt text:</strong> <?= $article['image_alt'] ?></p>
+                    <label>Image: </label>
+                    <img src="../uploads/<?= $article['image_file'] ?>" width="400px" alt="<?= $article['image_alt'] ?>">
+                    <p class="alt"><strong>Alt text: </strong> <?= $article['image_alt'] ?></p>
                     <a href="alt_text_edit.php?id=<?= $article['id'] ?>" class="btn btn-secondary">Edit alt text</a>
-                    <a href="image_delete.php?id=<?= $id ?>" class="btn btn-secondary">Delete image</a><br><br>
+                    <a href="image_delete.php?id=<?= $id ?>" class="btn btn-secondary">Delete image</a>
+                    <br><br>
                 <?php } ?>
             </section>
 
@@ -216,8 +228,8 @@ $description = "Member Article";
                     <label for="published" class="form-check-label">Published</label>
                 </div>
                 <input type="submit" name="update" value="Save" class="btn btn-primary">
-            </section><!-- /.text -->
-        </div><!-- /.admin-article -->
+            </section>  
+        </div>   
         </main>
     </form>
     
@@ -225,11 +237,6 @@ $description = "Member Article";
 
 
 <?php include APP_ROOT . "/public/includes/member_footer.php" ?>
-
-
-
-
-
 
 
 

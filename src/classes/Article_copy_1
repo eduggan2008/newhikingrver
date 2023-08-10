@@ -58,15 +58,10 @@ class Article {
         return $this->db->runSql($sql)->fetchColumn();   
     }
 
-    
-
-    // -----------------Multiple Functions I am testing for multiple images----------------
-
-
     /* public function create (array $article) {
         foreach ($_FILES['image']['name'] as $filename) {
             
-            $image_filenames = $image_filenames . $filename . ',' ;
+        $image_filenames = $image_filenames . $filename . ',' ;
 
             $sql = "INSERT INTO article (title, subtitle, summary, content, category_id, member_id,
                             images, published)
@@ -75,40 +70,41 @@ class Article {
                 $this->db->runSql($sql, $article);           
                 $this->db->commit();                         
                 return true; 
-        }
 
             print_r($image_filenames);
             echo "<script>console.log('Debug Objects: " . $image_filenames . "' );</script>";
-        
+        }
     } */
     
 
-   
-    public function createCopy1 (array $article, array $temporary, string $destination): bool {  
 
+    public function create (array $article, array $temporary, string $destination): bool {
         try {   
 
             // in order to see this echo you need to comment out the success redirect on line 103 in article.php (member)
+            /* foreach($_FILES['image']['name'] as $filename) {
+                
+                echo "<script>console.log('Debug Objects: " . $filename . "' );</script>";
+            } */
 
             // this isn't working but ideal to get something like this to work as opposed to above - $temporary is defined on line 13 in article.php (member)
             /* foreach($temporary as $file) {
                 echo "<script>console.log('Debug Objects: " . $file . "' );</script>";
             } */
- 
+                    $image_filenames = '';
 
-            $image_filenames = '';
                     foreach ($_FILES['image']['name'] as $filename) {
-                        $image_filenames = $image_filenames . $filename . ','; 
+                        $image_filenames = $image_filenames . $filename . ',' ;
+
+                        $comma_separated_image_filenames = rtrim($image_filenames,',');
+                        echo "<script>console.log('Debug Objects: " . $comma_separated_image_filenames . "' );</script>";
+                        /* print_r ($comma_separated_image_filenames); */
+                        
                     }
 
-                    $comma_separated_image_filenames = rtrim($image_filenames,',');
-
-                    echo "<script>console.log('Debug Objects: " . $comma_separated_image_filenames . "' );</script>";
-                    print_r ($comma_separated_image_filenames);
-
-                // 8/1/23 notes: need to move sql into foreach
-                // and need to change DB structure so image table references article, and article table does NOT reference image
-                    // and then you will need to update your references in the code to account for the new DB structure
+            // 8/1/23 notes: need to move sql into foreach
+            // and need to change DB structure so image table references article, and article table does NOT reference image
+                // and then you will need to update your references in the code to account for the new DB structure
 
                 $this->db->beginTransaction();               
                 if ($destination) {                          
@@ -117,7 +113,7 @@ class Article {
                     $imagick->writeImage($destination);      
 
                     $sql = "INSERT INTO image (file, alt)
-                            VALUES (:file, :alt);";                           
+                            VALUES (:file, :alt);";                
                     $this->db->runSql($sql, [$article['image_file'], $article['image_alt']]);            
                     $article['image_id'] = $this->db->lastInsertId(); 
                 }
@@ -128,8 +124,7 @@ class Article {
                             :image_id, :published);";     
                 $this->db->runSql($sql, $article);           
                 $this->db->commit();                         
-                return true;     
-
+                return true;                                 
         } catch (Exception $e) {                         
             $this->db->rollBack();                       
             if (file_exists($destination)) {             
@@ -141,43 +136,7 @@ class Article {
                 throw $e;                               
             }
         }
-    
     }
-    
-
-    
-    public function createMemberNewArticle (array $article, array $temporary, string $destination): bool {  
-        
-            $image_filenames = '';
-                    foreach ($image_filenames as $filename) {
-                        $image_filenames = $image_filenames . $filename . ','; 
-
-                         
-                        if ($destination) {                          
-                            $imagick = new \Imagick($temporary);     
-                            $imagick->cropThumbnailImage(1200, 700); 
-                            $imagick->writeImage($destination);  
- 
-        
-                        $sql = "INSERT INTO article (title, filenames, published)
-                                VALUES (:title, :filenames, :published);";     
-                        $this->db->runSql($sql, $article);                      
-                        return true;  
-                        
-                    }
-                }
-            
-                    $comma_separated_image_filenames = rtrim($image_filenames,',');
-
-                    echo "<script>console.log('Debug Objects: " . $comma_separated_image_filenames . "' );</script>";
-                    print_r ($comma_separated_image_filenames);
-
-                // 8/1/23 notes: need to move sql into foreach
-                // and need to change DB structure so image table references article, and article table does NOT reference image
-                    // and then you will need to update your references in the code to account for the new DB structure
-
-    }
-    
 
     function incoming_files() {
         $files = $_FILES;
@@ -204,13 +163,7 @@ class Article {
         return $files3;
     }
 
-
-    // -----------------End of Multiple Functions I am testing for multiple images----------------
-    
-
-
-    public function create(array $article, string $temporary, string $destination): bool {
-    /* public function create(array $article, array $temporary, string $destination): bool { */
+    public function createCopy(array $article, string $temporary, string $destination): bool {
         try {                                            
             $this->db->beginTransaction();               
             if ($destination) {                          

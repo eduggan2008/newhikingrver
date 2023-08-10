@@ -9,7 +9,7 @@ class Validate {
 
     public static function isText($text, $min = 0, $max = 1000)
     {
-        $length = mb_strlen($text);
+        $length = mb_strlen($text ?? '');
         return ($length >= $min and $length <= $max);
     }
 
